@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Dicoding Automation Test Suite">
+    <test name="Dicoding Website Tests">
+        <classes>
+            <class name="com.dicoding.test.tests.HomePageTest" />
+            <class name="com.dicoding.test.tests.LoginTest" />
+            <class name="com.dicoding.test.tests.SearchTest" />
+        </classes>
+    </test>
+</suite>
