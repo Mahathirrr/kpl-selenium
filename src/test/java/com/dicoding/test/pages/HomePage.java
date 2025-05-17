@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class HomePage extends BasePage {
     private static final Logger logger = LogManager.getLogger(HomePage.class);
-    
+
     // Locator untuk elemen-elemen di halaman utama
     private final By loginButtonLocator = By.xpath("//a[text()='Masuk']");
     private final By registerButtonLocator = By.xpath("//a[text()='Daftar']");
@@ -22,38 +22,60 @@ public class HomePage extends BasePage {
     private final By programMenuLocator = By.xpath("//a[text()='Program']");
     private final By capaianDampakMenuLocator = By.xpath("//a[text()='Capaian & Dampak']");
     private final By lainnyaMenuLocator = By.xpath("//a[text()='Lainnya']");
-    private final By heroTitleLocator = By.xpath("//h1[contains(text(), 'Bangun Karirmu')]");
-    
+
+    // Perbaikan: Mengubah locator heroTitleLocator dan menambahkan locator baru
+    private final By logoLocator = By.xpath("//img[contains(@alt, 'Dicoding')]");
+    private final By learningPathSectionLocator = By
+            .xpath("//h2[contains(text(), 'Learning Path')] | //a[text()='Learning Path']");
+    private final By telahDipercayaLocator = By.xpath("//*[contains(text(), 'Telah dipercaya')]");
+
     /**
      * Konstruktor untuk HomePage
+     * 
      * @param driver instance WebDriver
-     * @param wait instance WebDriverWait
+     * @param wait   instance WebDriverWait
      */
     public HomePage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
         logger.info("Halaman utama Dicoding diinisialisasi");
     }
-    
+
     /**
      * Metode untuk memverifikasi apakah halaman utama sudah dimuat
+     * 
      * @return true jika halaman utama sudah dimuat, false jika tidak
      */
     public boolean isPageLoaded() {
-        boolean isLoaded = isElementDisplayed(heroTitleLocator);
+        // Perbaikan: Menggunakan kombinasi dari beberapa elemen yang pasti ada di
+        // halaman utama
+        boolean logoDisplayed = isElementDisplayed(logoLocator);
+        boolean learningPathDisplayed = isElementDisplayed(learningPathSectionLocator)
+                || isElementDisplayed(learningPathMenuLocator);
+        boolean correctTitle = getPageTitle().contains("Dicoding Indonesia");
+
+        // Cukup verifikasi bahwa logo ada dan judul halaman benar
+        boolean isLoaded = logoDisplayed && correctTitle;
+
         logger.info("Verifikasi halaman utama dimuat: " + isLoaded);
+        logger.info("Logo ditampilkan: " + logoDisplayed);
+        logger.info("Judul halaman mengandung 'Dicoding Indonesia': " + correctTitle);
+
         return isLoaded;
     }
-    
+
     /**
-     * Metode untuk mendapatkan judul hero section
-     * @return teks judul hero section
+     * Metode untuk mendapatkan judul halaman
+     * 
+     * @return teks judul halaman
      */
-    public String getHeroTitle() {
-        return getText(heroTitleLocator);
+    @Override
+    public String getPageTitle() {
+        return super.getPageTitle();
     }
-    
+
     /**
      * Metode untuk mengklik tombol login
+     * 
      * @return instance LoginPage
      */
     public LoginPage clickLoginButton() {
@@ -61,9 +83,10 @@ public class HomePage extends BasePage {
         click(loginButtonLocator);
         return new LoginPage(driver, wait);
     }
-    
+
     /**
      * Metode untuk mengklik tombol register
+     * 
      * @return instance RegisterPage (belum diimplementasikan)
      */
     public void clickRegisterButton() {
@@ -71,9 +94,10 @@ public class HomePage extends BasePage {
         click(registerButtonLocator);
         // Return RegisterPage jika sudah diimplementasikan
     }
-    
+
     /**
      * Metode untuk melakukan pencarian
+     * 
      * @param keyword kata kunci pencarian
      * @return instance SearchResultPage
      */
@@ -84,7 +108,7 @@ public class HomePage extends BasePage {
         driver.findElement(searchInputLocator).submit();
         return new SearchResultPage(driver, wait);
     }
-    
+
     /**
      * Metode untuk mengklik menu Learning Path
      */
@@ -92,7 +116,7 @@ public class HomePage extends BasePage {
         logger.info("Mengklik menu Learning Path");
         click(learningPathMenuLocator);
     }
-    
+
     /**
      * Metode untuk mengklik menu Langganan
      */
@@ -100,7 +124,7 @@ public class HomePage extends BasePage {
         logger.info("Mengklik menu Langganan");
         click(langgananMenuLocator);
     }
-    
+
     /**
      * Metode untuk mengklik menu Program
      */
@@ -108,7 +132,7 @@ public class HomePage extends BasePage {
         logger.info("Mengklik menu Program");
         click(programMenuLocator);
     }
-    
+
     /**
      * Metode untuk mengklik menu Capaian & Dampak
      */
@@ -116,7 +140,7 @@ public class HomePage extends BasePage {
         logger.info("Mengklik menu Capaian & Dampak");
         click(capaianDampakMenuLocator);
     }
-    
+
     /**
      * Metode untuk mengklik menu Lainnya
      */

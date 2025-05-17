@@ -1,0 +1,9 @@
+com/dicoding/test/utils/TestUtils.class
+com/dicoding/test/tests/HomePageTest.class
+com/dicoding/test/pages/LoginPage.class
+com/dicoding/test/base/BaseTest.class
+com/dicoding/test/tests/SearchTest.class
+com/dicoding/test/pages/SearchResultPage.class
+com/dicoding/test/tests/LoginTest.class
+com/dicoding/test/pages/BasePage.class
+com/dicoding/test/pages/HomePage.class
